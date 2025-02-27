@@ -25,7 +25,11 @@
             z-index: 1000;
             padding: 10px 0;
             padding-top: 25px;
+            transition: transform 0.3s ease-in-out;
         }
+
+        /* GALLERY STYLES - Increase this value */
+       
 
         .nav-left ul {
             list-style: none;
@@ -67,7 +71,7 @@
         
         /* GALLERY STYLES */
         .gallery {
-            margin-top: 120px; /* Adjusted to accommodate fixed header */
+            margin-top: 90px; /* Adjusted to accommodate fixed header */
         }
         
         .gallery img, .gallery video {
@@ -76,15 +80,15 @@
             height: auto;
         }
         /* Add this CSS to center align the footer text */
-footer {
-    text-align: center;
-    padding: 20px 0;
-    margin-top: 30px;
-}
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 30px;
+        }
 
-footer p {
-    margin: 0;
-}
+        footer p {
+            margin: 0;
+        }
         
         /* SCROLL TO TOP BUTTON STYLES - NEW ADDITION */
         #scrollToTop {
@@ -111,12 +115,75 @@ footer p {
             background-color: rgba(0, 0, 0, 0.8);
         }
         
+        /* HAMBURGER MENU STYLES - NEW ADDITION WITH REDUCED HEIGHT */
+        .hamburger-menu {
+            display: none;
+            cursor: pointer;
+            position: absolute;
+            top: 30px;
+            right: 20px;
+            z-index: 1001;
+            width: 25px; /* Reduced width */
+            height: 16px; /* Reduced height */
+        }
+        
+        .hamburger-menu .bar {
+            width: 25px; /* Reduced width */
+            height: 2px; /* Reduced height */
+            background-color: white;
+            margin: 4px 0; /* Reduced margin */
+            transition: 0.4s;
+            display: block;
+        }
+        
         /* RESPONSIVE STYLES */
         @media (max-width: 768px) {
             .nav-left ul {
                 flex-direction: column;
-                gap: 5px;
+                gap: 10px; /* Reduced gap */
+                padding: 15px 0; /* Reduced padding */
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                background-color: black;
+                height: auto; /* Changed from 100vh to auto */
+                max-height: 80vh; /* Added max height */
+                justify-content: flex-start;
+                align-items: center;
+                transform: translateY(-100%);
+                transition: transform 0.3s ease-in-out;
+                padding-top: 70px; /* Reduced top padding */
+                overflow-y: auto; /* Added scroll if needed */
             }
+            
+            .nav-left.active ul {
+                transform: translateY(0);
+            }
+            
+            .nav-left ul li a {
+                font-size: 95%; /* Slightly reduced font size */
+                padding: 8px; /* Reduced padding */
+                display: block;
+            }
+            
+            .hamburger-menu {
+                display: block;
+            }
+            
+            /* Animation for hamburger to X - adjusted for smaller size */
+            .hamburger-menu.active .bar:nth-child(1) {
+                transform: rotate(-45deg) translate(-4px, 5px); /* Adjusted values */
+            }
+            
+            .hamburger-menu.active .bar:nth-child(2) {
+                opacity: 0;
+            }
+            
+            .hamburger-menu.active .bar:nth-child(3) {
+                transform: rotate(45deg) translate(-4px, -5px); /* Adjusted values */
+            }
+            
             .gallery img, .gallery video {
                 max-width: 100%;
                 height: auto;
@@ -131,9 +198,15 @@ footer p {
             <div class="logo-container">
                 <img src="assets/my-logo.webp" alt="My Logo">
             </div>
+            <!-- Hamburger Menu Button - NEW ADDITION WITH REDUCED HEIGHT -->
+            <div class="hamburger-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
             <div class="nav-left">
                 <ul>
-                    <li><a href="#portfolio-2">About Me</a></li>
+                    <li><a href="#portfolio-2">About</a></li>
                     <li><a href="#portfolio-4">Social Media Creatives</a></li>
                     <li><a href="#portfolio-12">Logo Designs</a></li>
                     <li><a href="#portfolio-14">Print Creatives</a></li>
@@ -202,7 +275,7 @@ footer p {
     <!-- ADD THIS BUTTON RIGHT HERE - New "Scroll to Top" button -->
     <button id="scrollToTop" title="Go to top">↑</button>
     
-    <!-- ADD THIS SCRIPT RIGHT HERE - JavaScript for the scroll to top functionality -->
+    <!-- ADD THIS SCRIPT RIGHT HERE - JavaScript for the scroll to top and hamburger menu functionality -->
     <script>
         // Get the button
         let mybutton = document.getElementById("scrollToTop");
@@ -224,6 +297,26 @@ footer p {
             document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
             return false;
         };
+        
+        // Hamburger Menu Functionality - NEW ADDITION
+        const hamburger = document.querySelector('.hamburger-menu');
+        const navLeftMenu = document.querySelector('.nav-left');
+        const menuLinks = document.querySelectorAll('.nav-left ul li a');
+        
+        hamburger.addEventListener('click', function() {
+            // Toggle active class for hamburger animation
+            this.classList.toggle('active');
+            // Toggle active class for menu visibility
+            navLeftMenu.classList.toggle('active');
+        });
+        
+        // Close menu when a link is clicked
+        menuLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                hamburger.classList.remove('active');
+                navLeftMenu.classList.remove('active');
+            });
+        });
     </script>
 </body>
 </html>
